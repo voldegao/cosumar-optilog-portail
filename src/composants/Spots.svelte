@@ -1,111 +1,35 @@
+<script>
+    import Spot from './Spot.svelte';
+    import {getQuais,quais} from "../apiStore.js";
+    import { onMount } from 'svelte';
+    
+    onMount(async () => {
+       const interval =  setInterval(getQuais,60000);
+       getQuais()
+       return () => clearInterval(interval);
+	});
+    let q 
+    quais.subscribe((value) => {
+        console.log(value)
+        q = value
+    });
 
-    <div class="flex justify-between mt-4">
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">1</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">2</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">3</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-between items-center">
-                <span class="text-7xl text-green-400 pt-4">4</span>
-                <span class="flex flex-col text-center font-bold bg-green-200 w-full">
-                    <span>15 Min</span>
-                    <span>64827B6</span>
-                </span>
-            </div>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-between items-center">
-                <span class="text-7xl text-green-400 pt-5">5</span>
-                <span class="flex flex-col text-center font-bold bg-green-200 w-full">
-                    <span>9 Min</span>
-                    <span>7952A86</span>
-                </span>
-            </div>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">6</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">7</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">8</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">9</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">10</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">11</span>
-            </div>
-            <span class="absolute bg-red-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont border-dashed">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">1</span>
-            </div>
-            <span class="absolute bg-blue-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont border-dashed">
-            <div class="relative z-20 h-full flex flex-col justify-center items-center">
-                <span class="text-6xl">2</span>
-            </div>
-            <span class="absolute bg-blue-100 rot"> test</span>
-        </span>
-        <span class="flex-1 mx-1 h-40 border shadow-sm rounded-md bg-white relative rotcont border-dashed">
-            <div class="relative z-20 h-full flex flex-col justify-between items-center">
-                <span class="text-7xl text-green-400 pt-4">3</span>
-                <span class="flex flex-col text-center font-bold bg-green-200 w-full">
-                    <span>11 Min</span>
-                    <span>7952A86</span>
-                </span>
-            </div>
-        </span>
+</script>
 
-    </div>
-
-    <style>
-        .rot{
-            height: 159px;
-            width: 87%;
-            top: 0;
-            right: 10px;
-            transform: skew(217deg);
-            z-index: 10!important;
-        }
-        .rotcont{
-            overflow: hidden;
-        }
-    </style>
+<div class="flex justify-between mt-4">
+    <Spot type={'central'} quai={1} matricule={q.quai_1_matricule}  time={q.quai_1_delai}  objectif={q.quai_1_objectif}/>
+    <Spot type={'central'} quai={2} matricule={q.quai_2_matricule} time={q.quai_2_delai}  objectif={q.quai_2_objectif}/>
+    <Spot type={'central'} quai={3} matricule={q.quai_3_matricule} time={q.quai_3_delai}  objectif={q.quai_3_objectif}/>
+    <Spot type={'central'} quai={4} matricule={q.quai_4_matricule} time={q.quai_4_delai}  objectif={q.quai_4_objectif}/>
+    <Spot type={'central'} quai={5} matricule={q.quai_5_matricule} time={q.quai_5_delai}  objectif={q.quai_5_objectif}/>
+    <Spot type={'central'} quai={6} matricule={q.quai_6_matricule} time={q.quai_6_delai}  objectif={q.quai_6_objectif}/>
+    <Spot type={'central'} quai={7} matricule={q.quai_7_matricule} time={q.quai_7_delai}  objectif={q.quai_7_objectif}/>
+    <Spot type={'central'} quai={8} matricule={q.quai_8_matricule} time={q.quai_8_delai}  objectif={q.quai_8_objectif}/>
+    <Spot type={'central'} quai={9} matricule={q.quai_9_matricule} time={q.quai_9_delai}  objectif={q.quai_9_objectif}/>
+    <Spot type={'central'} quai={10} matricule={q.quai_10_matricule} time={q.quai_10_delai}  objectif={q.quai_10_objectif}/>
+    <Spot type={'central'} quai={11} matricule={q.quai_11_matricule} time={q.quai_11_delai}  objectif={q.quai_11_objectif}/>
+       
+    <Spot type={'maamoura'} quai={1} matricule={q.quai_1_matricule_maamoura} time={q.quai_1_delai_maamoura}  objectif={q.quai_1_objectif_maamoura}/>
+    <Spot type={'maamoura'} quai={2} matricule={q.quai_2_matricule_maamoura} time={q.quai_2_delai_maamoura} objectif={q.quai_2_objectif_maamoura} />
+    <Spot type={'maamoura'} quai={3} matricule={q.quai_3_matricule_maamoura} time={q.quai_3_delai_maamoura}  objectif={q.quai_3_objectif_maamoura}/>
+</div>
